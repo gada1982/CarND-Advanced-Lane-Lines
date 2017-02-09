@@ -13,9 +13,9 @@ The goals / steps of this project are the following:
 - Output visual display of the lane boundries and numerical estimation of lane curvature and vehicle  position
 
 # Rubric Points
-## Camera Calibration
+### Camera Calibration
 
-Compute camera matric and distortion coefficients and check on one of the calibration images as a test.
+#### 1. Compute camera matrix and distortion coefficients and check on one of the calibration images as a test:
 
 The code for the code is in the first code cell of the iPyhton notebook P4.jpynb.
 
@@ -24,7 +24,26 @@ TODO more
 - Use the output *objpoints and *imgpoints to compute the camera calibration and distortion coefficients by using *cv2.calibrateCamera(). 
 - Apply distortion correction to the own sample image by using *cv2.undistort() and show the result
 
-## Pipeline (single image)
+### Pipeline (single image)
+#### 1. Apply distortion correction to images:
+TODO
+
+#### 2. Create a binary image using color transfer and gradients:
+TODO
+
+#### 3. Apply perspective transform to rectify images:
+TODO
+
+#### 4. Identify lane line pixels in the rectified image and fit with a polynomial:
+TODO
+
+#### 5. Estimate the radius of the curvature of the road and the position of the vehicle with respect to center of lane:
+TODO
+
+### Pipeline (video)
+#### 1. Use the pipeline established with a single image for the video:
+
+### Discussion
 
 
 
