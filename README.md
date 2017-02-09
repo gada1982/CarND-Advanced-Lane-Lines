@@ -1,3 +1,40 @@
+# CarND-Advanced-Lane-Lines
+
+This project is done as a part of the Nanodegree - Self-Driving Car Engineer provided from Udacity. The outcome of the project is, ...
+
+The goals / steps of this project are the following:
+- Compute the camera calibration matrix and distortion coefficients given a set of chessboard images
+- Apply a distortion correction to raw images
+- Use color transform, gradients, etc., to create a thresholded binary image
+- Apply a perspective transform to rectify binary image ("birds-eye view")
+- Detect lane pixels and fit to find the lane boundry
+- Determine the curvature of the lane and vehicle position with respect to center
+- Warp the detected lane boundries back onto the original image
+- Output visual display of the lane boundries and numerical estimation of lane curvature and vehicle  position
+
+# Rubric Points
+## Camera Calibration
+
+Compute camera matric and distortion coefficients and check on one of the calibration images as a test.
+
+The code for the code is in the first code cell of the iPyhton notebook P4.jpynb.
+
+- Prepare "object points", which will be the (x, y, z) coordinates of the chessboard corners. It is assumed the chessboard is fixed on (x, y) plane at z=0, such that the object points are the same for each calibration image.
+TODO more
+- Use the output *objpoints and *imgpoints to compute the camera calibration and distortion coefficients by using *cv2.calibrateCamera(). 
+- Apply distortion correction to the own sample image by using *cv2.undistort() and show the result
+
+## Pipeline (single image)
+
+
+
+
+
+
+
+
+
+
 ## Advanced Lane Finding
 [![Udacity - Self-Driving Car NanoDegree](https://s3.amazonaws.com/udacity-sdc/github/shield-carnd.svg)](http://www.udacity.com/drive)
 
