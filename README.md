@@ -28,6 +28,7 @@ The goals / steps of this project are the following:
 - Python 3.5
 - Environment [CarND-Term1-Starter-Kit](https://github.com/udacity/CarND-Term1-Starter-Kit/blob/master/README.md) provided by Udacity
 - [Project Data] (https://github.com/udacity/CarND-Advanced-Lane-Lines) provided by Udacity
+- Some code is taken out the material of the lectures of the Nanodegree *Self-Driving Car Engineer* provided by Udacity
 
 # 2. Files
 - TODO
@@ -92,7 +93,34 @@ The following image shows an example for a curved street segment: 
 ![street_curved_warped](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/curved_street_warped.png)
 
 # 7. Detect Lane Lines - Fit Polynomial
+After applying calibration, undistortion, thresholding, and a perspective transform to a street image we have a binary image where the lane lines stand out clearly. Now we have to decide explicitly which pixels are part of the lines and which belong to the left line and which belong to the right line.
 
+The following image shows a binary image example with its histogramm:
+![bin_histogramm](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/mask_and_histo.png)
+
+To find the lane lines two different approches are implemented:
+1. Sliding Windows
+  - Used to find the lane lines when it is not known where they are (e.g.: first frame or after losing search windows)
+2. Searching in a defined area
+  - Used to find the lane lines when it is already known where to search (e.g.: in frames where with a robust fit in the previous frame)
+
+The code for *Sliding Window Search* can be found in the TODO ????? code cell of the iPyhton notebook P4.jpynb in the function `find_first`:
+- 9 sliding windows are used over the hole height of the images
+- Window margin of 100 is used
+- At least 50 pixels have to be found to recenter the searching window
+- `np.polyfit(lefty, leftx, 2)` and `np.polyfit(righty, rightx, 2)` are used to define a polynom 2nd order for both lane lines
+  - done in the *pixel-world* and in *real-world (m)* 
+
+The following image shows an example:
+![find_first](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/find_first.png)
+
+The code for *Sliding Window Search* can be found in the TODO ????? code cell of the iPyhton notebook P4.jpynb in the function `find_next`:
+- If it was not possible to get good fits in the preferred searching area, find first is used again (to use the sliding window approach)
+- `np.polyfit(lefty, leftx, 2)` and `np.polyfit(righty, rightx, 2)` are used to define a polynom 2nd order for both lane lines
+  - done in the *pixel-world* and in *real-world (m)* 
+
+The following image shows an example:
+![find_next](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/find_next.png)
 
 # 8. Lane Curvature and Vehicel Offset
 
