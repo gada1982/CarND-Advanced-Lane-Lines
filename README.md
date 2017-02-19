@@ -44,12 +44,15 @@ To do this we use a set of chessboard images (provided by Udacity), which are ta
 
 TODO Insert Image with chessboard corners marked
 
-The code for the code is in the second code cell of the iPyhton notebook P4.jpynb.
+The code for functionalityy is in the second code cell of the iPyhton notebook P4.jpynb.
+TODO function get_calibration_data
 
-- Prepare "object points", which will be the (x, y, z) coordinates of the chessboard corners. It is assumed the chessboard is fixed on (x, y) plane at z=0, such that the object points are the same for each calibration image.
-TODO more
-- Use the output *objpoints and *imgpoints to compute the camera calibration and distortion coefficients by using *cv2.calibrateCamera(). 
-- Apply distortion correction to the own sample image by using *cv2.undistort() and show the result
+- A list of object points is created, which represent x,y,z-coordinates. The chessboard doesn't move (z is fixed) and only x and y may vary.
+- For all chessboard-images (provided by Udacity) cv2.findChessboardCorners(gray, (9,6), None) is used to find a set of corners (x, y-coordinates) within the chessboard. The chessboard has 9 corners on x-dimension and 6 corners on y-dimension.
+- Theese corner coordinates are added to a list of imgage-points, which represent the 2d points in image plane.
+- The corners are added to a list of object-points too, which represent the 3d points in real world space.
+- At all images, where corners have been detected successfully, the corners are marked and the augmented images are stored in the folder *camera_cal_corners_found*
+- The object-points and image-points are used for undistortion of images
 
 # 4. Undistort Images
 
