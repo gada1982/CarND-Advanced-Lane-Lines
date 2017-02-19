@@ -34,7 +34,17 @@ The goals / steps of this project are the following:
 - README.md - Explains the structure of the software and the approach to solve the problem 
 
 # 3. Camera Calibration
-The code for the code is in the first code cell of the iPyhton notebook P4.jpynb.
+When a camera takes pictures in the real world (3D) it transforms the images to 2D. This transformation is not perfect. The quality may very (quality of camera, lenses, area within the image, ...) but there is always distortion. Disturbed images would produce a wrong localization of the vehilce in this project.
+
+There are different types of distortion like radial distortion or tangential distortion.
+
+To get undistorted images, first Correction Coefficients have to be calculated.
+
+To do this we use a set of chessboard images (provided by Udacity), which are taken with the same camera as in the car. This images from different views are analysed and the corners are marked.
+
+TODO Insert Image with chessboard corners marked
+
+The code for the code is in the second code cell of the iPyhton notebook P4.jpynb.
 
 - Prepare "object points", which will be the (x, y, z) coordinates of the chessboard corners. It is assumed the chessboard is fixed on (x, y) plane at z=0, such that the object points are the same for each calibration image.
 TODO more
