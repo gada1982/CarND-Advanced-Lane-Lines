@@ -42,7 +42,8 @@ To get undistorted images, first Correction Coefficients have to be calculated.
 
 To do this we use a set of chessboard images (provided by Udacity), which are taken with the same camera as in the car. This images from different views are analysed and the corners are marked.
 
-TODO Insert Image with chessboard corners marked
+The following images shows an example:
+![chessboard](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/chessboard_corners.png)
 
 The code for this functionality can be found in the second code cell of the iPyhton notebook P4.jpynb.
 Function `get_calibration_data`:
