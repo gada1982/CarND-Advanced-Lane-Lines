@@ -123,7 +123,20 @@ The following image shows an example:
 ![find_next](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/find_next.png)
 
 # 8. Lane Curvature and Vehicel Offset
+The code for calculation of the lane curvature and the vehicel offset can be found in the TODO ????? code cell of the iPyhton notebook P4.jpynb in the functions `calculate_curvature_pix` and `calculate_curvature_rw`:
 
+`calculate_curvature_pix` is used to calculate the data in pixels, which is only done for testing. `calculate_curvature_rw` is used to calculate the data for the real world (m). To prepare the data for the real world, code is included in the functions `find_first` and `find_next`. In theese two functions a polynom with coefficients for the real world dimensions is calculated with the following conversion rates:
+- ym_per_pix = 30/720 # meters per pixel in y dimension
+- xm_per_pix = 3.7/700 # meters per pixel in x dimension
+
+The curvature of a polynome is calculated the following way (A, B, C) are defined by `np.polyfit()`:
+![calc_curv](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/calc_curv.png)
+
+The curvature for the left and right lane are calculated seperately and the mean is taken for the final output.
+
+To calculate the offset of the vehicle, the position where the left and right lane polynom cut the bottom of the camera image (nearest point) are taken as referance and compared to the center of the image in x-direction (camera mounting point).
+
+Theese information is printed on every frame of the augmented video.
 
 # 9. Pipeline for Single Images
 
