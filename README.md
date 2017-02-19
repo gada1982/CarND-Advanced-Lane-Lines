@@ -42,19 +42,31 @@ To get undistorted images, first Correction Coefficients have to be calculated.
 
 To do this we use a set of chessboard images (provided by Udacity), which are taken with the same camera as in the car. This images from different views are analysed and the corners are marked.
 
-The following images shows an example:
+The following image shows an example:
 ![chessboard](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/chessboard_corners.png)
 
 The code for this functionality can be found in the second code cell of the iPyhton notebook P4.jpynb.
-Function `get_calibration_data`:
+Functions `get_calibration_data` and `cal_undistort`:
 - A list of object points is created, which represent x,y,z-coordinates in the real world. The chessboard doesn't move (z is fixed) and only x and y may vary.
 - For all chessboard-images (provided by Udacity) `cv2.findChessboardCorners(gray, (9,6), None)` is used to find a set of corners (x, y-coordinates) within the chessboard. The used images of the chessboard have 9 corners in x-dimension and 6 corners in y-dimension.
 - Theese corner coordinates are added to a list of imgage-points, which represent the 2d points in image plane.
 - The corner coordinates are added to a list of object-points too, which represent the 3d points in real world space.
 - At all images, where to right number of corners have been detected, the corners are marked and the augmented images (with `cv2.drawChessboardCorners(img, (9,6), corners, ret)`) are stored in the folder *camera_cal_corners_found* TODO richtig?
 - The object-points and image-points are used for undistortion of images
+- Finally `cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1],None,None)` is used to get the camera matrix *mtx* and the distortion coeffcients *dist*.
 
 # 4. Undistort Images
+To undistor images to following steps are done. The code for this functionality can be found in the second code cell of the iPyhton notebook P4.jpynb in the functions `cal_undistort`:
+
+- Usage of `cv2.undistort(img, mtx, dist, None, mtx)` to undistort.
+
+The following image shows an chessboard-example: 
+![chessboard_undistorted](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/undistorted_image_chessboard.png)
+
+The following image shows an example (taken with the same camera) how this is applied to the lane-line-images:
+![lane_lines_undistorted](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/undistorted_image_lane_lines.png)
+
+
 
 
 # 5. Binary Threshold
