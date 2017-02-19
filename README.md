@@ -44,14 +44,13 @@ To do this we use a set of chessboard images (provided by Udacity), which are ta
 
 TODO Insert Image with chessboard corners marked
 
-The code for functionalityy is in the second code cell of the iPyhton notebook P4.jpynb.
-TODO function get_calibration_data
-
-- A list of object points is created, which represent x,y,z-coordinates. The chessboard doesn't move (z is fixed) and only x and y may vary.
-- For all chessboard-images (provided by Udacity) cv2.findChessboardCorners(gray, (9,6), None) is used to find a set of corners (x, y-coordinates) within the chessboard. The chessboard has 9 corners on x-dimension and 6 corners on y-dimension.
+The code for this functionality can be found in the second code cell of the iPyhton notebook P4.jpynb.
+Function `get_calibration_data`:
+- A list of object points is created, which represent x,y,z-coordinates in the real world. The chessboard doesn't move (z is fixed) and only x and y may vary.
+- For all chessboard-images (provided by Udacity) `cv2.findChessboardCorners(gray, (9,6), None)` is used to find a set of corners (x, y-coordinates) within the chessboard. The used images of the chessboard have 9 corners in x-dimension and 6 corners in y-dimension.
 - Theese corner coordinates are added to a list of imgage-points, which represent the 2d points in image plane.
-- The corners are added to a list of object-points too, which represent the 3d points in real world space.
-- At all images, where corners have been detected successfully, the corners are marked and the augmented images are stored in the folder *camera_cal_corners_found*
+- The corner coordinates are added to a list of object-points too, which represent the 3d points in real world space.
+- At all images, where to right number of corners have been detected, the corners are marked and the augmented images (with `cv2.drawChessboardCorners(img, (9,6), corners, ret)`) are stored in the folder *camera_cal_corners_found* TODO richtig?
 - The object-points and image-points are used for undistortion of images
 
 # 4. Undistort Images
