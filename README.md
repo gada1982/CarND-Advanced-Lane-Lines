@@ -56,7 +56,7 @@ Functions `get_calibration_data` and `cal_undistort`:
 - Finally `cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1],None,None)` is used to get the camera matrix *mtx* and the distortion coeffcients *dist*.
 
 # 4. Undistort Images
-To undistor images to following steps are done. The code for this functionality can be found in the second code cell of the iPyhton notebook P4.jpynb in the functions `cal_undistort`:
+To undistor images to following steps are done. The code for this functionality can be found in the second code cell of the iPyhton notebook P4.jpynb in the function `cal_undistort`:
 
 - Usage of `cv2.undistort(img, mtx, dist, None, mtx)` to undistort.
 
@@ -70,10 +70,26 @@ The following image shows an example (taken with the same camera) how this is ap
 
 
 # 5. Binary Threshold
+TODO
 
 
 # 6. Image Transformation - Bird Eye View
+One task within this project is to measure the curvature of the lane lines. To do this the camera images have to be transformed to have a top-down view (Bird Eye View).
 
+The code for this functionality can be found in the TODO ????? code cell of the iPyhton notebook P4.jpynb in the functions `warp_image` and `warp_image_int`:
+
+- Points in the source images are defined
+- Points in the destination image are defined
+- A polynom is drawn with this points to show how this transformation is managed.
+- `cv2.getPerspectiveTransform(points_src_float, points_dst_float)` is used to define the transformation matrix (M) from source source points to destination points
+- `cv2.warpPerspective(image, M, image_size, flags=cv2.INTER_LINEAR)` is used to do the transformation
+- `cv2.getPerspectiveTransform(points_dst_float, points_src_float)` is used to define the inverted transformation matrix (Minv) back from destination points to source points
+
+The following image shows an example for a straight street segment: 
+![street_straight_warped](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/straight_street_warped.png)
+
+The following image shows an example for a curved street segment: 
+![street_curved_warped](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/curved_street_warped.png)
 
 # 7. Detect Lane Lines - Fit Polynomial
 
