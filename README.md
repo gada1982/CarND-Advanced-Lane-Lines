@@ -246,6 +246,6 @@ The most challenging part of the project was to try different approaches for def
 
 A big improvement was possible by averaging lane line polynoms over various frames from the video (15 taken). 
 
-The choosen solution works well for the mandatory video `project_video.mp4` but not at all for the optional videos `challenge_video.mp4` and `harder_challenge.mp4`.
+The choosen solution works well for the mandatory video `project_video.mp4` but not at all for the optional videos `challenge_video.mp4` and `harder_challenge.mp4`. Color changes of street, shadows of other cars and objects disturb the filtering of the lane lines.
 
 Futher work has to be invested to get the optional part working in a satisfying way.
