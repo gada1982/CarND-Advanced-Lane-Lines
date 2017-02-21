@@ -216,6 +216,8 @@ Finally the pipeline has to be tested with videos provided by Udacity.
 
 The video called `project_video.mp4` is the video the pipeline has to work properly to pass the project review.
 
+The code for this functionality can be found in **CODE CELL 15** of the Jupyter notebook P4.jpynb.
+
 [Project Video](https://youtu.be/dzjb8t82Jf8)
 
 The videos `challenge_video.mp4` and `harder_challenge.mp4` are extra (and optional) challenges but these don't have to be used to pass the project review.
