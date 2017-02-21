@@ -223,4 +223,17 @@ The code for this functionality can be found in **CODE CELL 15** of the Jupyter 
 The videos `challenge_video.mp4` and `harder_challenge.mp4` are extra (and optional) challenges but these don't have to be used to pass the project review.
 
 # 11. Conclusion
+The most challenging part of the project was to try different approaches for defining binary mask which works properly. Different tries have been made.
+- Color spaces (RGB, HSV, HLS)
+- Magnitude of the gradients
+- Direction of the gradients
+- Sobel gradients
+- And different combinations of the mentioned methods
+
+A big improvement was possible by averaging over various frames from the video (15 taken). 
+
+The choosen solution works well on the mandatory `project_video.mp4` but not at all at the optional videos `challenge_video.mp4` and `harder_challenge.mp4`.
+
+Futher work has to be invested to get the optional part working in a satisfying way.
+
 
