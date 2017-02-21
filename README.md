@@ -31,8 +31,16 @@ The goals / steps of this project are the following:
 - Some code is taken out the material of the lectures of the Nanodegree *Self-Driving Car Engineer* provided by Udacity
 
 # 2. Files
-- TODO
-- README.md - Explains the structure of the software and the approach to solve the problem 
+- README.md - Explains the structure of the software and the approach to solve the problem
+- P4.ipynb - Implementation of helper functions and pipeline
+- project_video.mp4 - Raw video which has to be handled properly to pass the project review
+- CarND-Advanced-Lane-Lines - project video.mp4 - Output for project_video.mp4 after using the pipeline
+- challenge_video.mp4 - optional raw testing video
+- harder_challenge_video.mp4 - optional raw testing video
+- folder camera_cal - images for camera calibration
+- folder info_for_readme - images, which are included in this readme
+- folder test_images - test images provided by Udacity
+- folder own_test_images - own test images
 
 # 3. Camera Calibration
 When a camera takes pictures in the real world (3D) it transforms the images to 2D. This transformation is not perfect most of the time. The quality may vary (quality of camera, lenses, area within the image, ...) but there is always distortion. In this project, disturbed images would produce a wrong localization of the vehicle.
