@@ -69,16 +69,52 @@ The following image shows an example (taken with the same camera) how this is ap
 ![lane_lines_undistorted](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/undistorted_image_lane_lines.png)
 
 # 5. Binary Threshold
-TODO
 To get a binary mask of the images the following steps are done. The code for this functionality can be found in **CODE CELL 4**, **CODE CELL 5**, **CODE CELL 6** and **CODE CELL 9** of the Jupyter notebook P4.jpynb.
 
 Two different approches have been combined to get a properly working solution for the binary mask:
 - Apply a color mask to a given image to filter out yellow and white parts of the image
 - Use Sobel Gradients in x- and y-direction
 
+### Color Mask
+The code for this functionality can be found in **CODE CELL 4** of the Jupyter notebook P4.jpynb. Function `get_color_mask`:
 
-Function `cal_undistort`:
+- Convert image to HSV color space
+- Define thresholds for white areas
+- Mask out white areas
+- Define thresholds for yellow areas
+- Mask out yellow areas
+- Combine both mask to detect yellow AND white areas within the image
 
+The following image shows an example (taken with the same camera) how this is applied to the lane-line-images:
+![Color_Mask](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/color_mask.png)
+
+### Sobel Gradient
+The code for this functionality can be found in **CODE CELL 5** of the Jupyter notebook P4.jpynb. Functions `abs_sobel_thresh`, `get_sobel_mask` and `get_combined_sobel_mask`:
+
+- Convert image to HLS color space
+- Get the L-Channel of the image
+- Calculate Sobel Gradients in x- and y direction
+- Define both gradients to own maks for the L-Channel
+- Get the S-Channel of the image
+- Calculate Sobel Gradients in x- and y direction
+- Define both gradients to own maks for the S-Channel
+- Combine the masks for L- and S-Channel
+
+The following image shows an example of usage of Sobel Gradients:
+![Sobel_Mask](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/sobel_filter.png)
+
+### Combine all Masks
+The code for this functionality can be found in **CODE CELL 6** and **CODE CELL 9** of the Jupyter notebook P4.jpynb. Functions `plot_image_with_color_mask_and_sobel_HLS` and `get_comb_filter`:
+
+- Get the color mask for yellow and white
+- Get the mask with sobel gradients for L- and S-Channel
+- Combine both masks
+
+The following image shows an example of usage of Sobel Gradients and Color Masks for a non-wraped image:
+![Sobel_and Color Mask](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/color_and_soble.png)
+
+The following image shows an example of usage of Sobel Gradients and Color Masks for a wraped image:
+![Sobel_and Color Mask_wraped](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/comb_filter_wraped.png)
 
 # 6. Image Transformation - Bird Eye View
 One task within this project is to measure the curvature of the lane lines. To do this the camera images have to be transformed to have a top-down view (Bird Eye View).
