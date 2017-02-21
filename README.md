@@ -1,5 +1,5 @@
 # Introduction
-This project is done as a part of the Nanodegree - *Self-Driving Car Engineer* provided from Udacity. The outcome of the projct is, ...
+This project is done as a part of the Nanodegree - *Self-Driving Car Engineer* provided by Udacity. The scope of this project is finding and marking lane lines on a given, recorded track. The recorded raw video and some used sample codes are provided by Udacity.
 
 The goals / steps of this project are the following:
 - Compute the camera calibration matrix and distortion coefficients given a set of chessboard images
@@ -35,29 +35,30 @@ The goals / steps of this project are the following:
 - README.md - Explains the structure of the software and the approach to solve the problem 
 
 # 3. Camera Calibration
-When a camera takes pictures in the real world (3D) it transforms the images to 2D. This transformation is not perfect. The quality may very (quality of camera, lenses, area within the image, ...) but there is always distortion. Disturbed images would produce a wrong localization of the vehilce in this project.
+When a camera takes pictures in the real world (3D) it transforms the images to 2D. This transformation is not perfect most of the time. The quality may vary (quality of camera, lenses, area within the image, ...) but there is always distortion. In this project, disturbed images would produce a wrong localization of the vehicle.
 
 There are different types of distortion like radial distortion or tangential distortion.
 
-To get undistorted images, first Correction Coefficients have to be calculated.
+To get undistorted images, first correction coefficients have to be calculated.
 
-To do this we use a set of chessboard images (provided by Udacity), which are taken with the same camera as in the car. This images from different views are analysed and the corners are marked.
+To do this, we use a set of chessboard images (provided by Udacity), which are taken with the same camera as in the car. This images from different views are analysed and the corners are marked.
 
 The following image shows an example:
 ![chessboard](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/chessboard_corners.png)
 
-The code for this functionality can be found in the second code cell of the iPyhton notebook P4.jpynb.
+The code for this functionality can be found in **CODE CELL 2** of the Jupyter notebook P4.jpynb.
 Functions `get_calibration_data` and `cal_undistort`:
-- A list of object points is created, which represent x,y,z-coordinates in the real world. The chessboard doesn't move (z is fixed) and only x and y may vary.
+- A list of object points is created, which represent the x,y,z-coordinates in the real world. The chessboard doesn't move, z is fixed and only x and y may vary.
 - For all chessboard-images (provided by Udacity) `cv2.findChessboardCorners(gray, (9,6), None)` is used to find a set of corners (x, y-coordinates) within the chessboard. The used images of the chessboard have 9 corners in x-dimension and 6 corners in y-dimension.
 - Theese corner coordinates are added to a list of imgage-points, which represent the 2d points in image plane.
 - The corner coordinates are added to a list of object-points too, which represent the 3d points in real world space.
-- At all images, where to right number of corners have been detected, the corners are marked and the augmented images (with `cv2.drawChessboardCorners(img, (9,6), corners, ret)`) are stored in the folder *camera_cal_corners_found* TODO richtig?
-- The object-points and image-points are used for undistortion of images
+- At all images, where the right number of corners have been detected, the corners are marked and one augmented example-image (with `cv2.drawChessboardCorners(img, (9,6), corners, ret)`) is shown above.
+- The object-points and image-points are used for the undistortion of the images
 - Finally `cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1],None,None)` is used to get the camera matrix *mtx* and the distortion coeffcients *dist*.
 
 # 4. Undistort Images
-To undistor images to following steps are done. The code for this functionality can be found in the second code cell of the iPyhton notebook P4.jpynb in the function `cal_undistort`:
+To undistor images the following steps are done. The code for this functionality can be found in **CODE CELL 2** and **CODE CELL 3** of the Jupyter notebook P4.jpynb.
+Function `cal_undistort`:
 
 - Usage of `cv2.undistort(img, mtx, dist, None, mtx)` to undistort.
 
@@ -67,11 +68,16 @@ The following image shows an chessboard-example: 
 The following image shows an example (taken with the same camera) how this is applied to the lane-line-images:
 ![lane_lines_undistorted](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/undistorted_image_lane_lines.png)
 
-
-
-
 # 5. Binary Threshold
 TODO
+To get a binary mask of the images the following steps are done. The code for this functionality can be found in **CODE CELL 4**, **CODE CELL 5**, **CODE CELL 6** and **CODE CELL 9** of the Jupyter notebook P4.jpynb.
+
+Two different approches have been combined to get a properly working solution for the binary mask:
+- Apply a color mask to a given image to filter out yellow and white parts of the image
+- Use Sobel Gradients in x- and y-direction
+
+
+Function `cal_undistort`:
 
 
 # 6. Image Transformation - Bird Eye View
