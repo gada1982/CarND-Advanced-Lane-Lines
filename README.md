@@ -190,13 +190,35 @@ To calculate the offset of the vehicle, the position where the left and right la
 Theese information is printed on every frame of the augmented video.
 
 # 9. Pipeline for Single Images
+Finally a pipeline had to be built which take all these helper functions together. The pipeline takes a single raw image, does the calculation and augmentation and returns the augmented image.
 
+The code for this functionality can be found in **CODE CELL 14** of the Jupyter notebook P4.jpynb. Function `generate_processed_image`:
+
+- Undistort image
+- Apply perspective transformation
+- Get the final combined binary mask
+  - Color mask for yellow and white parts
+  - Sobel gradient for L- and S-Channel in HLS color space (x- and y-direction)
+- Decide if sliding-window-search has to be used or the optimized search is possible
+- Draw a polynom on the part of the image where the used lane lines is located
+- Draw the left (red) and right (blue) lane line on part of the image where the single lane lines are located
+- Augment original image with data about curvature and vehicle offset
+- Augment original image with the small images of the sub-steps of the pipeline
+  - Bird-Eye-View on the used lane line
+  - Combined binary mask
+  - Output of the search algorithm
+
+The following image shows an example:
+![final_image](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/final_image.png)
 
 # 10. Pipeline for Video
+Finally the pipeline has to be tested with videos provided by Udacity.
 
-The video called `project_video.mp4` is the video your pipeline should work well on.  
+The video called `project_video.mp4` is the video the pipeline has to work properly to pass the project review.
 
-The `challenge_video.mp4` video is an extra (and optional) challenge for you if you want to test your pipeline under somewhat trickier conditions.  The `harder_challenge.mp4` video is another optional challenge and is brutal!
+[Project Video](https://youtu.be/dzjb8t82Jf8)
+
+The videos `challenge_video.mp4` and `harder_challenge.mp4` are extra (and optional) challenges but these don't have to be used to pass the project review.
 
 # 11. Conclusion
 
