@@ -157,7 +157,8 @@ To find the lane lines two different approches are implemented:
   - Used to find the lane lines when it is not known where they are (e.g.: first frame or after losing search windows)
 - Searching in a defined area
   - Used to find the lane lines when it is already known where to search (e.g.: in frames with a robust fit in the previous frame)
-
+  
+### Sliding Window Search
 The code for *Sliding Window Search* can be found in **CODE CELL 10** of the Jupyter notebook P4.jpynb. Function `find_first`:
 - Code is mostly taken form the Udacity sample code and modfied when it was neccessary
 - 9 sliding windows are used over the hole height of the images
@@ -172,6 +173,7 @@ The code for *Sliding Window Search* can be found in **CODE CELL 10** of the Jup
 The following image shows an example:
 ![find_first](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/find_first.png)
 
+### Searching in a defined area
 The code for the second search method (place where to expect the lane lines is known) can be found in **CODE CELL 11** of the Jupyter notebook P4.jpynb. Function `find_next`:
 - Code is mostly taken form the Udacity sample code and modfied when it was neccessary
 - If it was not possible to get good fits in the preferred searching area, `find_first` is used again (to use the sliding window approach)
