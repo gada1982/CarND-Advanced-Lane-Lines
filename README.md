@@ -119,7 +119,7 @@ The following image shows an example of usage of Sobel Gradients and Color Masks
 # 6. Image Transformation - Bird Eye View
 One task within this project is to measure the curvature of the lane lines. To do this the camera images have to be transformed to have a top-down view (Bird Eye View).
 
-The code for this functionality can be found in the TODO ????? code cell of the iPyhton notebook P4.jpynb in the functions `warp_image` and `warp_image_int`:
+The code for this functionality can be found in **CODE CELL 7** and **CODE CELL 8** of the Jupyter notebook P4.jpynb. Functions `warp_image` and `warp_image_int`:
 
 - Points in the source images are defined
 - Points in the destination image are defined
@@ -127,6 +127,9 @@ The code for this functionality can be found in the TODO ????? code cell of the 
 - `cv2.getPerspectiveTransform(points_src_float, points_dst_float)` is used to define the transformation matrix (M) from source source points to destination points
 - `cv2.warpPerspective(image, M, image_size, flags=cv2.INTER_LINEAR)` is used to do the transformation
 - `cv2.getPerspectiveTransform(points_dst_float, points_src_float)` is used to define the inverted transformation matrix (Minv) back from destination points to source points
+
+The following tables show the source and destination points, which have been used for transformation:
+![Transformation_points](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/points.png)
 
 The following image shows an example for a straight street segment: 
 ![street_straight_warped](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/straight_street_warped.png)
