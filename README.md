@@ -144,31 +144,37 @@ The following image shows a binary image example with its histogramm:
 ![bin_histogramm](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/mask_and_histo.png)
 
 To find the lane lines two different approches are implemented:
-1. Sliding Windows
+- Sliding Windows
   - Used to find the lane lines when it is not known where they are (e.g.: first frame or after losing search windows)
-2. Searching in a defined area
+- Searching in a defined area
   - Used to find the lane lines when it is already known where to search (e.g.: in frames where with a robust fit in the previous frame)
 
-The code for *Sliding Window Search* can be found in the TODO ????? code cell of the iPyhton notebook P4.jpynb in the function `find_first`:
+The code for *Sliding Window Search* can be found can be found in **CODE CELL 10** of the Jupyter notebook P4.jpynb. Function `find_first`:
+- Code is mostly taken form the Udacity sample code and modfied when it was neccessary
 - 9 sliding windows are used over the hole height of the images
 - Window margin of 100 is used
 - At least 50 pixels have to be found to recenter the searching window
 - `np.polyfit(lefty, leftx, 2)` and `np.polyfit(righty, rightx, 2)` are used to define a polynom 2nd order for both lane lines
   - done in the *pixel-world* and in *real-world (m)* 
+- To flatten the polynoms over more the one video-frame a list was defined for taking the everage
 
 The following image shows an example:
 ![find_first](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/find_first.png)
 
-The code for *Sliding Window Search* can be found in the TODO ????? code cell of the iPyhton notebook P4.jpynb in the function `find_next`:
-- If it was not possible to get good fits in the preferred searching area, find first is used again (to use the sliding window approach)
+The code for the second search method (place where to expect the lane lines known) can be found in **CODE CELL 11** of the Jupyter notebook P4.jpynb. Function `find_next`:
+- Code is mostly taken form the Udacity sample code and modfied when it was neccessary
+- If it was not possible to get good fits in the preferred searching area, `find_first` is used again (to use the sliding window approach)
 - `np.polyfit(lefty, leftx, 2)` and `np.polyfit(righty, rightx, 2)` are used to define a polynom 2nd order for both lane lines
   - done in the *pixel-world* and in *real-world (m)* 
+- To flatten the polynoms over more the one video-frame a list was defined for taking the everage
+  - Average is taken over the last 15 frames (if available)
+- The polynoms for the left and right lane line is marked yellow in the output image to use it later on in the augmented image
 
 The following image shows an example:
 ![find_next](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/find_next.png)
 
 # 8. Lane Curvature and Vehicel Offset
-The code for calculation of the lane curvature and the vehicel offset can be found in the TODO ????? code cell of the iPyhton notebook P4.jpynb in the functions `calculate_curvature_pix` and `calculate_curvature_rw`:
+The code for calculation of the lane curvature and the vehicel offset can be found in **CODE CELL 12** and **CODE CELL 13** of the Jupyter notebook P4.jpynb. Functions `calculate_curvature_pix` and `calculate_curvature_rw`:
 
 `calculate_curvature_pix` is used to calculate the data in pixels, which is only done for testing. `calculate_curvature_rw` is used to calculate the data for the real world (m). To prepare the data for the real world, code is included in the functions `find_first` and `find_next`. In theese two functions a polynom with coefficients for the real world dimensions is calculated with the following conversion rates:
 - ym_per_pix = 30/720 # meters per pixel in y dimension
@@ -179,13 +185,12 @@ The curvature of a polynome is calculated the following way (A, B, C) are define
 
 The curvature for the left and right lane are calculated seperately and the mean is taken for the final output.
 
-To calculate the offset of the vehicle, the position where the left and right lane polynom cut the bottom of the camera image (nearest point) are taken as referance and compared to the center of the image in x-direction (camera mounting point).
+To calculate the offset of the vehicle, the position where the left and right lane polynom cut the bottom of the camera image (nearest point) are taken as referance and are compared to the center of the image in x-direction (camera mounting point).
 
 Theese information is printed on every frame of the augmented video.
 
 # 9. Pipeline for Single Images
 
-The images for camera calibration are stored in the folder called `camera_cal`.  The images in `test_images` are for testing your pipeline on single frames.  To help the reviewer examine your work, please save examples of the output from each stage of your pipeline in the folder called `ouput_images`, and include a description in your writeup for the project of what each image shows.
 
 # 10. Pipeline for Video
 
