@@ -43,7 +43,7 @@ The goals / steps of this project are the following:
 - folder own_test_images - own test images
 
 # 3. Camera Calibration
-When a camera takes pictures in the real world (3D) it transforms the images to 2D. This transformation is not perfect most of the time. The quality may vary (quality of camera, lenses, area within the image, ...) but there is always distortion. In this project, disturbed images would produce a wrong localization of the vehicle.
+When a camera takes pictures in the real world (3D) it transforms the images to 2D. This transformation is not perfect most of the time. The quality may vary (quality of camera, lenses, area within the image, ...) but there is always distortion. In this project, distorted images would produce a wrong localization of the vehicle.
 
 There are different types of distortion like radial distortion or tangential distortion.
 
@@ -58,10 +58,10 @@ The code for this functionality can be found in **CODE CELL 2** of the Jupyter n
 Functions `get_calibration_data` and `cal_undistort`:
 - A list of object points is created, which represent the x,y,z-coordinates in the real world. The chessboard doesn't move, z is fixed and only x and y may vary.
 - For all chessboard-images (provided by Udacity) `cv2.findChessboardCorners(gray, (9,6), None)` is used to find a set of corners (x, y-coordinates) within the chessboard. The used images of the chessboard have 9 corners in x-dimension and 6 corners in y-dimension.
-- Theese corner coordinates are added to a list of imgage-points, which represent the 2d points in image plane.
+- These corner coordinates are added to a list of imgage-points, which represent the 2d points in image plane.
 - The corner coordinates are added to a list of object-points too, which represent the 3d points in real world space.
 - At all images, where the right number of corners have been detected, the corners are marked and one augmented example-image (with `cv2.drawChessboardCorners(img, (9,6), corners, ret)`) is shown above.
-- The object-points and image-points are used for the undistortion of the images
+- The object-points and image-points of all given calibration images are used for undistortion of the images
 - Finally `cv2.calibrateCamera(objpoints, imgpoints, gray.shape[::-1],None,None)` is used to get the camera matrix *mtx* and the distortion coeffcients *dist*.
 
 # 4. Undistort Images
@@ -74,6 +74,7 @@ The following image shows an chessboard-example: 
 ![chessboard_undistorted](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/undistorted_image_chessboard.png)
 
 The following image shows an example (taken with the same camera) how this is applied to the lane-line-images:
+This functionality is applied to each image/frame.
 ![lane_lines_undistorted](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/undistorted_image_lane_lines.png)
 
 # 5. Binary Threshold
@@ -91,7 +92,7 @@ The code for this functionality can be found in **CODE CELL 4** of the Jupyter n
 - Mask out white areas
 - Define thresholds for yellow areas
 - Mask out yellow areas
-- Combine both mask to detect yellow AND white areas within the image
+- Combine both masks to detect yellow AND white areas within the image
 
 The following image shows an example (taken with the same camera) how this is applied to the lane-line-images:
 ![Color_Mask](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/color_mask.png)
@@ -101,10 +102,10 @@ The code for this functionality can be found in **CODE CELL 5** of the Jupyter n
 
 - Convert image to HLS color space
 - Get the L-Channel of the image
-- Calculate Sobel Gradients in x- and y direction
+- Calculate Sobel Gradients in x- and y-direction
 - Define both gradients to own maks for the L-Channel
 - Get the S-Channel of the image
-- Calculate Sobel Gradients in x- and y direction
+- Calculate Sobel Gradients in x- and y-direction
 - Define both gradients to own maks for the S-Channel
 - Combine the masks for L- and S-Channel
 
@@ -132,7 +133,7 @@ The code for this functionality can be found in **CODE CELL 7** and **CODE CELL 
 - Points in the source images are defined
 - Points in the destination image are defined
 - A polynom is drawn with this points to show how this transformation is managed.
-- `cv2.getPerspectiveTransform(points_src_float, points_dst_float)` is used to define the transformation matrix (M) from source source points to destination points
+- `cv2.getPerspectiveTransform(points_src_float, points_dst_float)` is used to define the transformation matrix (M) from source points to destination points
 - `cv2.warpPerspective(image, M, image_size, flags=cv2.INTER_LINEAR)` is used to do the transformation
 - `cv2.getPerspectiveTransform(points_dst_float, points_src_float)` is used to define the inverted transformation matrix (Minv) back from destination points to source points
 
@@ -155,27 +156,30 @@ To find the lane lines two different approches are implemented:
 - Sliding Windows
   - Used to find the lane lines when it is not known where they are (e.g.: first frame or after losing search windows)
 - Searching in a defined area
-  - Used to find the lane lines when it is already known where to search (e.g.: in frames where with a robust fit in the previous frame)
+  - Used to find the lane lines when it is already known where to search (e.g.: in frames with a robust fit in the previous frame)
 
-The code for *Sliding Window Search* can be found can be found in **CODE CELL 10** of the Jupyter notebook P4.jpynb. Function `find_first`:
+The code for *Sliding Window Search* can be found in **CODE CELL 10** of the Jupyter notebook P4.jpynb. Function `find_first`:
 - Code is mostly taken form the Udacity sample code and modfied when it was neccessary
 - 9 sliding windows are used over the hole height of the images
 - Window margin of 100 is used
 - At least 50 pixels have to be found to recenter the searching window
 - `np.polyfit(lefty, leftx, 2)` and `np.polyfit(righty, rightx, 2)` are used to define a polynom 2nd order for both lane lines
-  - done in the *pixel-world* and in *real-world (m)* 
-- To flatten the polynoms over more the one video-frame a list was defined for taking the everage
+  - done in the *pixel-world* and in *real-world (m)*
+- Pixels for the single lane lines have been marked (left = red), (right = blue)
+- The polynoms for the left and right lane line is marked yellow in the output image to use it later on in the augmented image
+- To flatten the polynoms over more then one video-frame a list was defined for taking the average
 
 The following image shows an example:
 ![find_first](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/find_first.png)
 
-The code for the second search method (place where to expect the lane lines known) can be found in **CODE CELL 11** of the Jupyter notebook P4.jpynb. Function `find_next`:
+The code for the second search method (place where to expect the lane lines is known) can be found in **CODE CELL 11** of the Jupyter notebook P4.jpynb. Function `find_next`:
 - Code is mostly taken form the Udacity sample code and modfied when it was neccessary
 - If it was not possible to get good fits in the preferred searching area, `find_first` is used again (to use the sliding window approach)
 - `np.polyfit(lefty, leftx, 2)` and `np.polyfit(righty, rightx, 2)` are used to define a polynom 2nd order for both lane lines
   - done in the *pixel-world* and in *real-world (m)* 
-- To flatten the polynoms over more the one video-frame a list was defined for taking the everage
+- To flatten the polynoms over more then one video-frame a list was defined for taking the average
   - Average is taken over the last 15 frames (if available)
+- Pixels for the single lane lines have been marked (left = red), (right = blue)
 - The polynoms for the left and right lane line is marked yellow in the output image to use it later on in the augmented image
 
 The following image shows an example:
@@ -184,18 +188,18 @@ The following image shows an example:
 # 8. Lane Curvature and Vehicel Offset
 The code for calculation of the lane curvature and the vehicel offset can be found in **CODE CELL 12** and **CODE CELL 13** of the Jupyter notebook P4.jpynb. Functions `calculate_curvature_pix` and `calculate_curvature_rw`:
 
-`calculate_curvature_pix` is used to calculate the data in pixels, which is only done for testing. `calculate_curvature_rw` is used to calculate the data for the real world (m). To prepare the data for the real world, code is included in the functions `find_first` and `find_next`. In theese two functions a polynom with coefficients for the real world dimensions is calculated with the following conversion rates:
+`calculate_curvature_pix` is used to calculate the data in pixels, which is only done for testing. `calculate_curvature_rw` is used to calculate the data for the real world (m). To prepare the data for the real world, code is included in the functions `find_first` and `find_next`. In these two functions a polynom with coefficients for the real world dimensions is calculated with the following conversion rates:
 - ym_per_pix = 30/720 # meters per pixel in y dimension
 - xm_per_pix = 3.7/700 # meters per pixel in x dimension
 
 The curvature of a polynome is calculated the following way (A, B, C) are defined by `np.polyfit()`:
 ![calc_curv](https://github.com/gada1982/CarND-Advanced-Lane-Lines/blob/master/info_for_readme/calc_curv.png)
 
-The curvature for the left and right lane are calculated seperately and the mean is taken for the final output.
+The curvature for the left and right lane lines are calculated seperately and the mean is taken for the final output.
 
-To calculate the offset of the vehicle, the position where the left and right lane polynom cut the bottom of the camera image (nearest point) are taken as referance and are compared to the center of the image in x-direction (camera mounting point).
+To calculate the offset of the vehicle, the position where the left and right lane line polynom cut the bottom of the camera image (nearest point) are taken as referance and are compared to the center of the image in x-direction (camera mounting point).
 
-Theese information is printed on every frame of the augmented video.
+This information is printed on every frame of the augmented video.
 
 # 9. Pipeline for Single Images
 Finally a pipeline had to be built which take all these helper functions together. The pipeline takes a single raw image, does the calculation and augmentation and returns the augmented image.
@@ -209,9 +213,9 @@ The code for this functionality can be found in **CODE CELL 14** of the Jupyter 
   - Sobel gradient for L- and S-Channel in HLS color space (x- and y-direction)
 - Decide if sliding-window-search has to be used or the optimized search is possible
 - Draw a polynom on the part of the image where the used lane lines is located
-- Draw the left (red) and right (blue) lane line on part of the image where the single lane lines are located
+- Draw the left (red) and right (blue) lane line on the part of the image where the single lane lines are located
 - Augment original image with data about curvature and vehicle offset
-- Augment original image with the small images of the sub-steps of the pipeline
+- Augment original image with small images of the sub-steps of the pipeline
   - Bird-Eye-View on the used lane line
   - Combined binary mask
   - Output of the search algorithm
@@ -231,17 +235,15 @@ The code for this functionality can be found in **CODE CELL 15** of the Jupyter 
 The videos `challenge_video.mp4` and `harder_challenge.mp4` are extra (and optional) challenges but these don't have to be used to pass the project review.
 
 # 11. Conclusion
-The most challenging part of the project was to try different approaches for defining binary mask which works properly. Different tries have been made.
+The most challenging part of the project was to try different approaches for defining a binary mask which works properly. Different tries have been made.
 - Color spaces (RGB, HSV, HLS)
 - Magnitude of the gradients
 - Direction of the gradients
 - Sobel gradients
-- And different combinations of the mentioned methods
+- Different combinations of the mentioned methods
 
-A big improvement was possible by averaging over various frames from the video (15 taken). 
+A big improvement was possible by averaging lane line polynoms over various frames from the video (15 taken). 
 
-The choosen solution works well on the mandatory `project_video.mp4` but not at all at the optional videos `challenge_video.mp4` and `harder_challenge.mp4`.
+The choosen solution works well for the mandatory video `project_video.mp4` but not at all for the optional videos `challenge_video.mp4` and `harder_challenge.mp4`.
 
 Futher work has to be invested to get the optional part working in a satisfying way.
-
-
